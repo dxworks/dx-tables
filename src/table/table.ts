@@ -13,6 +13,8 @@ export class DxTable extends HTMLElement {
     content = ``;
     columns: any[] = []
     flattenedColumns: any
+    lowLevelColumnHeaders: any = [];
+
 
     constructor() {
         super();
@@ -21,6 +23,7 @@ export class DxTable extends HTMLElement {
         this.dataCopy = [...this.data];
         this.columns = this.table.columns;
         this.flattenedColumns = this.setInitialSortStates(this.flattenJSON(this.columns, 0));
+        this.lowLevelColumnHeaders = this.getLowLevelColumns();
     }
 
     // Define the input property for the data
@@ -41,6 +44,10 @@ export class DxTable extends HTMLElement {
 
     connectedCallback() {
         this.createTable();
+    }
+
+    getLowLevelColumns() {
+        return this.flattenedColumns.filter(column => column.level === this.flattenedColumns[this.flattenedColumns.length - 1].level);
     }
 
     createTable() {
@@ -168,10 +175,11 @@ export class DxTable extends HTMLElement {
         return emptyCount;
     }
 
-    addTableColumns(): string {
+   /* addTableColumns(): string {
         let columns = '<tbody id="table-body">';
         let singleColumn = '';
         this.data?.forEach((data: any) => {
+            console.log(data)
             singleColumn = `<tr style="border-bottom: 1px solid #cdcdcd" class="draggable" draggable="true">`;
             if (!Object.entries(data).length) {
                 singleColumn += this.insertEmptyRow();
@@ -199,6 +207,49 @@ export class DxTable extends HTMLElement {
             }
         });
         return singleColumn
+    }*/
+
+    addTableColumns(): string {
+        let columns = '<tbody id="table-body">';
+        let singleColumn = '';
+        this.data?.forEach(data => {
+            singleColumn = `<tr style="border-bottom: 1px solid #cdcdcd" class="draggable" draggable="true">`;
+            if (!Object.entries(data).length) {
+                singleColumn += this.insertEmptyRow();
+            } else {
+                singleColumn += this.createTableData(data);
+            }
+            singleColumn += `</tr>`;
+            columns += singleColumn;
+        });
+        return columns + '</tbody>';
+    }
+
+    createTableData(data: any): string {
+        let singleColumn = '';
+        // Iterate through lowLevelColumnHeaders to keep the correct column order
+        this.lowLevelColumnHeaders.forEach(header => {
+            const key = header.column.id;
+            const value = data[key];
+
+            if (value) {
+                const style = value.style ? value.style : "";
+                if (value.value.hasOwnProperty('url')) {
+                    singleColumn += `<td style="${style}" class="td-general-styling"><a href="${value.url}" target="_blank" >${value.displayValue}</a></td>`;
+                } else {
+                    if (value.value === '0') {
+                        singleColumn += `<td class="td-general-styling"><span class="d-none">${value.value}</span></td>`;
+                    } else {
+                        singleColumn += `<td style="${style}" class="td-general-styling"><span>${value.value}</span></td>`;
+                    }
+                }
+            } else {
+                //  empty cell if no data found
+                singleColumn += `<td class="td-general-styling"></td>`;
+            }
+        });
+
+        return singleColumn;
     }
 
     insertEmptyRow(): string {
