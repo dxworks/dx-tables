@@ -27,7 +27,8 @@ function generateTabs() {
 // Show the selected tab content and hide the others
 function showTabContent(index: number) {
     const tabContent = document.getElementById('tab-content');
-    tabContent!.innerHTML = `<dx-table table='${JSON.stringify(JSON.parse(tabs[index]).data)}'></dx-table>`;
+    tabContent!.innerHTML = `
+<dx-table table='${JSON.stringify(JSON.parse(tabs[index]).data)}'></dx-table>`;
 }
 
 customElements.define('dx-table', DxTable);

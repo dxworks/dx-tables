@@ -6,7 +6,7 @@ body {
 }
 
 nav {
-    background-color: #004d40;
+    background-color: #3a5a40;
     padding: 8px 16px;
     display: flex;
     align-items: center;
@@ -19,11 +19,11 @@ nav a {
     margin: 0 8px;
     padding: 8px;
     border-radius: 4px;
-    border: 1px solid #00796b;
+    border: 1px solid #d8e2dc;
 }
 
 nav a:hover {
-    background-color: #00796b;
+    background-color: #324d37;
     cursor: pointer;
 }
 
@@ -40,4 +40,32 @@ main {
 
 .tab-content.active {
     display: block;
+}
+.text-center{
+    text-align: center;
+}
+.army-green {
+    color: #3a5a40;
+}
+.jc-evenly{
+    justify-content: space-evenly;
+}
+.generic-btn {
+    width: 10rem;
+    height: 3rem;
+    background: #d8e2dc;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    border: unset;
+    color: #3a5a40;
+}
+.generic-btn:hover {
+    background-color: #dad7cd;
+}
+.mt-4{
+    margin-top: 4rem;
+}
+.w-100{
+    width: 100%;
 }

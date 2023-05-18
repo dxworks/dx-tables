@@ -3,27 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/fontawesome.min.css">-->
+    <title>TMGenerator</title>
     <link rel="stylesheet" href="style.css">
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const mainTabContent = document.getElementById("tab-content");
-            const mainTabContentWidth = mainTabContent.offsetWidth;
-            const headerNav = document.getElementById("nav-tabs");
-            headerNav.style.width = `${mainTabContentWidth}px`;
-        });
-    </script>
 </head>
 <body>
 
-<header>
-    <nav id="nav-tabs"></nav>
-</header>
-<main id="tab-content">
-</main>
+<div class="mt-4 w-100 flex text-center">
+    <h1 class="army-green">Welcome to our Table&Matrix generator!</h1>
+    <div class="jc-evenly w-100 flex mt-4">
+        <button id="tables" type="button" class="generic-btn">Tables</button>
+        <button id="matrices" type="button" class="generic-btn">Matrices</button>
+    </div>
+</div>
 
-<script type="module" src="dist/bundle.js"></script>
-
+<script src="src/homepage.js"></script>
 </body>
 </html>
