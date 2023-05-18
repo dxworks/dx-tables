@@ -27,14 +27,18 @@ nav a {
 
 nav a:hover {
     background-color: #00796b;
+    cursor: pointer;
 }
 
 main {
     padding: 16px;
+    width: fit-content;
+    margin-top: 3rem;
 }
 
 .tab-content {
     display: none;
+    width: fit-content;
 }
 
 .tab-content.active {
