@@ -12,8 +12,18 @@
 <header>
     <nav id="nav-tabs"></nav>
 </header>
-<main id="tab-content"></main>
-<script type="module" src="dist/bundle.js"></script>
+<main id="tab-content">
+</main>
 
+<script type="module" src="dist/bundle.js"></script>
+<script>
+    // Get the width of the main tab content
+    const mainTabContent = document.getElementById("tab-content");
+    const mainTabContentWidth = mainTabContent.offsetWidth;
+
+    // Set the width of the header nav to the same as the main tab content
+    const headerNav = document.getElementById("nav-tabs");
+    headerNav.style.width = `${mainTabContentWidth}px`;
+</script>
 </body>
 </html>
