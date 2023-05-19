@@ -1,3 +1,4 @@
+
 function isFalsy(a: any) {
     return !a || Object.keys(a).length === 0
 }
@@ -5,23 +6,21 @@ function isFalsy(a: any) {
 export class DxTable extends HTMLElement {
 
     columnCount = 0;
-
+    name: string;
     dataCopy: any = [];
     data: any = []
-    tableName: string = '';
     sortArray: any[] = [];
     content = ``;
     columns: any[] = []
     flattenedColumns: any
     lowLevelColumnHeaders: any = [];
 
-
     constructor() {
         super();
-        // this.attachShadow({mode: 'open'});
-        this.data = Object.values(this.table.data)
+        this.data = Object.values(this.table.data);
         this.dataCopy = [...this.data];
         this.columns = this.table.columns;
+        this.name = this.table.name;
         this.flattenedColumns = this.setInitialSortStates(this.flattenJSON(this.columns, 0));
         this.lowLevelColumnHeaders = this.getLowLevelColumns();
     }
@@ -175,39 +174,6 @@ export class DxTable extends HTMLElement {
         return emptyCount;
     }
 
-   /* addTableColumns(): string {
-        let columns = '<tbody id="table-body">';
-        let singleColumn = '';
-        this.data?.forEach((data: any) => {
-            console.log(data)
-            singleColumn = `<tr style="border-bottom: 1px solid #cdcdcd" class="draggable" draggable="true">`;
-            if (!Object.entries(data).length) {
-                singleColumn += this.insertEmptyRow();
-            } else {
-                singleColumn += this.createTableData(data);
-            }
-            singleColumn += `</tr>`;
-            columns += singleColumn;
-        });
-        return columns + '</tbody>';
-    }
-
-    createTableData(data: any): string {
-        let singleColumn = '';
-        Object.entries(data).forEach(([key, value]) => {
-            const style = Object(value).style ? Object(value)?.style : "";
-            if (Object(value).value.hasOwnProperty('url')) {
-                singleColumn += `<td  style="${style}" class="td-general-styling"><a href="${Object(value).url}" target="_blank" style="color: black">${Object(value).displayValue}</a></td>`
-            } else {
-                if (Object(value).value === '0') {
-                    singleColumn += `<td class="td-general-styling"><span class="d-none">${Object(value).value}</span></td>`
-                } else {
-                    singleColumn += `<td  style="${style}" class="td-general-styling"><span>${Object(value).value}</span></td>`
-                }
-            }
-        });
-        return singleColumn
-    }*/
 
     addTableColumns(): string {
         let columns = '<tbody id="table-body">';
@@ -381,7 +347,7 @@ export class DxTable extends HTMLElement {
     enableDragAndDrop(): void {
         // @ts-ignore
         const tableBody = document.getElementById('table-body');
-        let dragSrcElement: HTMLElement | null = null;
+        let dragSrcElement: HTMLElement | null;
 
         function handleDragStart(this: HTMLElement, e: DragEvent): void {
             dragSrcElement = this;

@@ -6,7 +6,7 @@ body {
 }
 
 nav {
-    background-color: #004d40;
+    background-color: #3a5a40;
     padding: 8px 16px;
     display: flex;
     align-items: center;
@@ -16,21 +16,21 @@ nav a {
     text-decoration: none;
     color: #ffffff;
     font-size: 16px;
-    margin: 0 8px;
-    padding: 8px;
+    margin-right: 0.5rem;
+    padding: 0.5rem;
     border-radius: 4px;
-    border: 1px solid #00796b;
+    border: 1px solid #d8e2dc;
 }
 
 nav a:hover {
-    background-color: #00796b;
+    background-color: #324d37;
     cursor: pointer;
 }
 
 main {
     padding: 16px;
     width: fit-content;
-    margin-top: 3rem;
+    margin-top: 1rem;
 }
 
 .tab-content {
@@ -40,4 +40,54 @@ main {
 
 .tab-content.active {
     display: block;
+}
+.text-center{
+    text-align: center;
+}
+.army-green {
+    color: #3a5a40;
+}
+.jc-evenly{
+    justify-content: space-evenly;
+}
+.generic-btn {
+    width: 10rem;
+    height: 3rem;
+    background: #d8e2dc;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 17px;
+    border: unset;
+    color: #3a5a40;
+}
+.generic-btn:hover {
+    background-color: #dad7cd;
+}
+.mt-4{
+    margin-top: 4rem;
+}
+.mt-2{
+    margin-top: 2rem;
+}
+.w-100{
+    width: 100%;
+}
+.w-3r{
+    width: 3rem;
+}
+.ml-1{
+    margin-left: 1rem;
+}
+.gray{
+    color: #6c757d;
+}
+.select {
+    padding: 0.6rem;
+    width: fit-content;
+}
+select:focus {
+    outline: none;
+}
+select#myDropdown {
+    font-size:1rem!important;
 }

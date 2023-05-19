@@ -2,6 +2,7 @@
 import {tabs} from './tabs'
 // @ts-ignore
 import {DxTable} from './table/table'
+import {DxMatrix} from "./matrix/matrix";
 
 interface ExternalModule {
     title: string;
@@ -15,7 +16,7 @@ function generateTabs() {
     tabs.map(it => JSON.parse(it)).forEach((module, index) => {
         // Create tab
         const tab = document.createElement('a');
-        tab.textContent = module.name;
+        tab.textContent = module.name? module.name : module.data.name;
         tab.addEventListener('click', () => showTabContent(index));
         navTabs?.appendChild(tab);
     });
@@ -27,8 +28,33 @@ function generateTabs() {
 // Show the selected tab content and hide the others
 function showTabContent(index: number) {
     const tabContent = document.getElementById('tab-content');
-    tabContent!.innerHTML = `<dx-table table='${JSON.stringify(JSON.parse(tabs[index]).data)}'></dx-table>`;
+    if (JSON.parse(tabs[index]).type === 'table') {
+        tabContent!.innerHTML = `
+            <style>
+           .td-general-styling {
+                padding: 0.2rem 0.5rem;
+                white-space: nowrap;
+                text-align: center;
+                vertical-align: middle;
+            }
+           </style>
+        <h3 class="gray">${JSON.parse(tabs[index]).name}</h3>
+        <dx-table table='${JSON.stringify(JSON.parse(tabs[index]))}'></dx-table>`;
+    } else if (JSON.parse(tabs[index]).type === 'matrix') {
+        tabContent!.innerHTML = `
+           <style>
+           .td-general-styling {
+                padding: 0.2rem 0.5rem;
+                white-space: nowrap;
+                text-align: center;
+                vertical-align: middle;
+            }
+           </style>
+        <h3 class="gray">${JSON.parse(tabs[index]).name}</h3>
+        <dx-matrix matrix='${JSON.stringify(JSON.parse(tabs[index]))}'></dx-matrix>`;
+    }
 }
 
 customElements.define('dx-table', DxTable);
+customElements.define('dx-matrix', DxMatrix);
 generateTabs()
