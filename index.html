@@ -5,17 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TMGenerator</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const mainTabContent = document.getElementById("tab-content");
+            const mainTabContentWidth = mainTabContent.offsetWidth;
+            const headerNav = document.getElementById("nav-tabs");
+            headerNav.style.width = `${mainTabContentWidth}px`;
+        });
+    </script>
+
 </head>
 <body>
 
-<div class="mt-4 w-100 flex text-center">
-    <h1 class="army-green">Welcome to our Table&Matrix generator!</h1>
-    <div class="jc-evenly w-100 flex mt-4">
-        <button id="tables" type="button" class="generic-btn">Tables</button>
-        <button id="matrices" type="button" class="generic-btn">Matrices</button>
-    </div>
-</div>
+<header>
+    <nav id="nav-tabs"></nav>
+</header>
+<button class="generic-btn w-3r mt-2 ml-1 " id="download"><i class="fas fa-download"></i></button>
 
-<script src="src/homepage.js"></script>
+<main id="tab-content">
+</main>
+<script>
+    const button = document.getElementById('download');
+    button.addEventListener('click', () => {
+        let table = document.getElementById('tab-content');
+        if (table) {
+            let html = table.outerHTML;
+            let blob = new Blob([html], {type: 'text/html'});
+            let url = URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            const name = document.querySelector('#tab-content').querySelector('h3').textContent.trim();
+            a.download = `${name}.html`;
+            a.click();
+        }
+    });
+</script>
+<script type="module" src="dist/bundle.js"></script>
+
 </body>
 </html>

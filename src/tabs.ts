@@ -1,15 +1,15 @@
 const table1 = {
-    "columns": [
-        {
+    "name": "Components_Overview",
+    "type": "table",
+    "columns": [{
         "name": "",
         "childrenColumns": [{
             "childrenColumns": [{
                 "id": "component",
-                "type": "String",
                 "name": "Component",
                 "nameStyle": "color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "startedin",
             "name": "started in",
@@ -19,20 +19,20 @@ const table1 = {
                 "type": "Date",
                 "name": "yyyy-mm",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "latestchange",
-            "name": "latest <br> change",
+            "name": "latest \u003cbr\u003e change",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "yyyymmlatestchange",
                 "type": "Date",
                 "name": "yyyy-mm",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
-        }],
+                "childrenColumns": []
+            }]
+        }]
     }, {
         "name": "Files",
         "borderR": true,
@@ -44,109 +44,109 @@ const table1 = {
                 "id": "#files",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "importedfiles",
-            "name": "imported <br> files",
+            "name": "imported \u003cbr\u003e files",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#importedfiles",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allimportedfiles",
                 "type": "String",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
-                "childrenColumns": [],
-            }],
+                "sortable": false,
+                "childrenColumns": []
+            }]
         }, {
             "id": "sourcefiles",
-            "name": "source <br> files",
+            "name": "source \u003cbr\u003e files",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#sourcefiles",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allsourcefiles",
                 "type": "String",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
-                "childrenColumns": [],
-            }],
+                "sortable": false,
+                "childrenColumns": []
+            }]
         }, {
             "id": "activerecentlyfiles",
-            "name": "active <br> recently",
+            "name": "active \u003cbr\u003e recently",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#activerecentlyfiles",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allactiverecentlyfiles",
                 "type": "String",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
-                "childrenColumns": [],
-            }],
+                "sortable": false,
+                "childrenColumns": []
+            }]
         }, {
             "id": "createdrecentlyfiles",
-            "name": "created <br> recently",
+            "name": "created \u003cbr\u003e recently",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "borderR": true,
             "childrenColumns": [{
                 "id": "#createdrecentlyfiles",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allcreatedrecentlyfiles",
                 "type": "String",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
+                "sortable": false,
                 "borderR": true,
-                "childrenColumns": [],
-            }],
-        }],
+                "childrenColumns": []
+            }]
+        }]
     }, {
         "name": "Code Size",
         "borderR": true,
         "childrenColumns": [{
             "id": "alllinescodesize",
-            "name": "all <br> lines",
+            "name": "all \u003cbr\u003e lines",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "x1000alllinescodesize",
                 "name": "x1000",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "sourcecodelines",
-            "name": "source <br> code lines",
+            "name": "source \u003cbr\u003e code lines",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "x1000sourcecodelines",
                 "name": "x1000",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allsourcecodelines",
                 "type": "String",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
-                "childrenColumns": [],
-            }],
+                "sortable": false,
+                "childrenColumns": []
+            }]
         }, {
             "id": "growthrecentcodesize",
             "name": "growth recent",
@@ -156,170 +156,170 @@ const table1 = {
                 "id": "x1000growthrecentcodesize",
                 "name": "x1000",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allgrowthrecentcodesize",
                 "type": "String",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
+                "sortable": false,
                 "borderR": true,
-                "childrenColumns": [],
-            }],
-        }],
+                "childrenColumns": []
+            }]
+        }]
     }, {
         "name": "Developers",
         "borderR": true,
         "childrenColumns": [{
             "id": "alldevs",
-            "name": "all <br> devs",
+            "name": "all \u003cbr\u003e devs",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#alldevs",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "activerecentlydevs",
-            "name": "active <br> recently",
+            "name": "active \u003cbr\u003e recently",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#activerecentlydevs",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allactiverecentlydevs",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
-                "childrenColumns": [],
-            }],
+                "sortable": false,
+                "childrenColumns": []
+            }]
         }, {
             "id": "joinedrecentlydevs",
-            "name": "joined <br> recently",
+            "name": "joined \u003cbr\u003e recently",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "borderR": true,
             "childrenColumns": [{
                 "id": "#joinedrecentlydevs",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%alljoinederecentlydevs",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
+                "sortable": false,
                 "borderR": true,
-                "childrenColumns": [],
-            }],
-        }],
+                "childrenColumns": []
+            }]
+        }]
     }, {
         "name": "Commits",
         "borderR": true,
         "childrenColumns": [{
             "id": "allcommits",
-            "name": "all <br> com.",
+            "name": "all \u003cbr\u003e com.",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#allcommits",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "recentcommits",
-            "name": "recent <br> commits",
+            "name": "recent \u003cbr\u003e commits",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "borderR": true,
             "childrenColumns": [{
                 "id": "#recentcommits",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allrecentcommits",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
+                "sortable": false,
                 "borderR": true,
-                "childrenColumns": [],
-            }],
-        }],
+                "childrenColumns": []
+            }]
+        }]
     }, {
         "name": "Change Volume",
         "borderR": true,
         "childrenColumns": [{
             "id": "allchurnvolume",
-            "name": "all <br> churn",
+            "name": "all \u003cbr\u003e churn",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "x1000allchurn",
                 "name": "x1000",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "recentchurnvolume",
-            "name": "recent <br> churn",
+            "name": "recent \u003cbr\u003e churn",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "borderR": true,
             "childrenColumns": [{
                 "id": "x1000recentchurn",
                 "name": "x1000",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allrecentchurn",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
+                "sortable": false,
                 "borderR": true,
-                "childrenColumns": [],
-            }],
-        }],
+                "childrenColumns": []
+            }]
+        }]
     }, {
         "name": "Tasks",
         "childrenColumns": [{
             "id": "alltasks",
-            "name": "all <br> tasks",
+            "name": "all \u003cbr\u003e tasks",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#alltasks",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
-            }],
+                "childrenColumns": []
+            }]
         }, {
             "id": "recenttasks",
-            "name": "recent <br> tasks",
+            "name": "recent \u003cbr\u003e tasks",
             "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
             "childrenColumns": [{
                 "id": "#recenttasks",
                 "name": "#",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "childrenColumns": [],
+                "childrenColumns": []
             }, {
                 "id": "%allrecenttasks",
                 "name": "%all",
                 "nameStyle": "font-weight: 400;font-size: 13px;color: #6c757d;",
-                "sortable": true,
-                "childrenColumns": [],
-            }],
-        }],
-    }], "name": "Components_Overview",
-    'data': {
+                "sortable": false,
+                "childrenColumns": []
+            }]
+        }]
+    }],
+    "data": {
         "scriptbee": {
-            "%allimportedfiles": {"value": "", "style": ""},
-            "#sourcefiles": {"value": "462", "style": "font-weight:bold;"},
-            "%allsourcefiles": {"value": "0.66", "style": ""},
-            "#activerecentlyfiles": {"value": "612", "style": "font-weight:bold;"},
             "component": {"value": "scriptbee", "style": ""},
             "yyyymmstartedin": {"value": "2021-07", "style": "color:green;"},
             "yyyymmlatestchange": {"value": "2023-03", "style": ""},
             "#files": {"value": "695", "style": "font-weight:bold;"},
             "#importedfiles": {"value": "0", "style": ""},
+            "%allimportedfiles": {"value": "", "style": ""},
+            "#sourcefiles": {"value": "462", "style": "font-weight:bold;"},
+            "%allsourcefiles": {"value": "0.66", "style": ""},
+            "#activerecentlyfiles": {"value": "612", "style": "font-weight:bold;"},
             "%allactiverecentlyfiles": {"value": "0.88", "style": ""},
             "#createdrecentlyfiles": {"value": "317", "style": "font-weight:bold;"},
             "%allcreatedrecentlyfiles": {"value": "0.52", "style": "background-color:green; border-right:1px solid;"},
@@ -341,7 +341,7 @@ const table1 = {
             "%allrecentchurn": {"value": "0.49", "style": "border-right:1px solid;"},
             "#alltasks": {"value": "1", "style": "color:#6c757d;"},
             "#recenttasks": {"value": "1", "style": "color:#6c757d;"},
-            "%allrecenttasks": {"value": "1", "style": ""},
+            "%allrecenttasks": {"value": "1", "style": ""}
         }, "dx": {
             "component": {"value": "dx", "style": ""},
             "yyyymmstartedin": {"value": "2017-12", "style": "color:gray;"},
@@ -373,7 +373,7 @@ const table1 = {
             "%allrecentchurn": {"value": "0.00", "style": "border-right:1px solid;"},
             "#alltasks": {"value": "30", "style": ""},
             "#recenttasks": {"value": "0", "style": "color:#6c757d;"},
-            "%allrecenttasks": {"value": "", "style": ""},
+            "%allrecenttasks": {"value": "", "style": ""}
         }, "depinder": {
             "component": {"value": "depinder", "style": ""},
             "yyyymmstartedin": {"value": "2021-11", "style": "color:green;"},
@@ -405,7 +405,7 @@ const table1 = {
             "%allrecentchurn": {"value": "0.16", "style": "border-right:1px solid;"},
             "#alltasks": {"value": "1", "style": "color:#6c757d;"},
             "#recenttasks": {"value": "1", "style": "color:#6c757d;"},
-            "%allrecenttasks": {"value": "1", "style": ""},
+            "%allrecenttasks": {"value": "1", "style": ""}
         }, "depminer": {
             "component": {"value": "depminer", "style": ""},
             "yyyymmstartedin": {"value": "2022-02", "style": "color:green;"},
@@ -437,7 +437,7 @@ const table1 = {
             "%allrecentchurn": {"value": "0.00", "style": "border-right:1px solid;"},
             "#alltasks": {"value": "0", "style": "color:#6c757d;"},
             "#recenttasks": {"value": "0", "style": "color:#6c757d;"},
-            "%allrecenttasks": {"value": "", "style": ""},
+            "%allrecenttasks": {"value": "", "style": ""}
         }, "insider": {
             "component": {"value": "insider", "style": ""},
             "yyyymmstartedin": {"value": "2019-02", "style": "color:green;"},
@@ -469,9 +469,9 @@ const table1 = {
             "%allrecentchurn": {"value": "0.01", "style": "border-right:1px solid;"},
             "#alltasks": {"value": "0", "style": "color:#6c757d;"},
             "#recenttasks": {"value": "0", "style": "color:#6c757d;"},
-            "%allrecenttasks": {"value": "", "style": ""},
-        },
-    },
+            "%allrecenttasks": {"value": "", "style": ""}
+        }
+    }
 }
 const table2 = {
     "columns": [{
@@ -947,8 +947,338 @@ const table2 = {
         "n": {},
     },
 }
+export var mockMatrix =
+    {
+        "name": "mock matrix",
+        "entity1PaddingColumns": [{
+            "id": "entity1namecolumn",
+            "name": "",
+            "childrenColumns": []
+        }, {
+            "id": "entity1sizecolumn",
+            "name": "Size(%)",
+            "nameStyle": "font-weight: bold;text-align: center;",
+            "childrenColumns": []
+        }, {
+            "id": "entity1devscolumn",
+            "name": "Devs",
+            "nameStyle": "font-weight: bold;text-align: center;",
+            "childrenColumns": []
+        }, {
+            "id": "entity1activedevscolumn",
+            "name": "Active Devs",
+            "nameStyle": "font-weight: bold;text-align: center;",
+            "childrenColumns": []
+        }, {
+            "id": "entity1apkscolumn",
+            "name": "APKS(%)",
+            "nameStyle": "font-weight: bold;text-align: center;",
+            "childrenColumns": []
+        }],
+        "entity2PaddingColumns": [{
+            "id": "entity2namecolumn",
+            "name": "",
+            "childrenColumns": []
+        }, {
+            "id": "entity2knowledgecolumn",
+            "name": "Knowledge(%)",
+            "nameStyle": "font-weight: bold;text-align: center;",
+            "childrenColumns": []
+        }, {
+            "id": "entity2componentscolumn",
+            "name": "Components",
+            "nameStyle": "font-weight: bold;text-align: center;",
+            "childrenColumns": []
+        }],
+        "entity1PaddingData": {
+            "scriptbee": {
+                "entity1namecolumn": {"value": "scriptbee", "style": "font-weight:bold;"},
+                "entity1sizecolumn": {"value": "695", "style": "background-color:green;"},
+                "entity1devscolumn": {"value": "14", "style": ""},
+                "entity1activedevscolumn": {"value": "14", "style": ""},
+                "entity1apkscolumn": {"value": "14", "style": ""}
+            },
+            "dx": {
+                "entity1namecolumn": {"value": "dx", "style": "font-weight:bold;"},
+                "entity1sizecolumn": {"value": "577", "style": "background-color:green;"},
+                "entity1devscolumn": {"value": "50", "style": ""},
+                "entity1activedevscolumn": {"value": "50", "style": ""},
+                "entity1apkscolumn": {"value": "50", "style": ""}
+            },
+            "depinder": {
+                "entity1namecolumn": {"value": "depinder", "style": "font-weight:bold;"},
+                "entity1sizecolumn": {"value": "55", "style": ""},
+                "entity1devscolumn": {"value": "11", "style": ""},
+                "entity1activedevscolumn": {"value": "11", "style": ""},
+                "entity1apkscolumn": {"value": "11", "style": ""}
+            },
+            "depminer": {
+                "entity1namecolumn": {"value": "depminer", "style": "font-weight:bold;"},
+                "entity1sizecolumn": {"value": "19", "style": "color:red;"},
+                "entity1devscolumn": {"value": "3", "style": ""},
+                "entity1activedevscolumn": {"value": "3", "style": ""},
+                "entity1apkscolumn": {"value": "3", "style": ""}
+            },
+            "insider": {
+                "entity1namecolumn": {"value": "insider", "style": "font-weight:bold;"},
+                "entity1sizecolumn": {"value": "201", "style": "background-color:green;"},
+                "entity1devscolumn": {"value": "18", "style": ""},
+                "entity1activedevscolumn": {"value": "18", "style": ""},
+                "entity1apkscolumn": {"value": "18", "style": ""}
+            }
+        },
+        "entity2PaddingData": {
+            "scriptbee": {
+                "entity2namecolumn": {"value": "scriptbee", "style": "font-weight:bold;"},
+                "entity2knowledgecolumn": {"value": "14", "style": ""},
+                "entity2componentscolumn": {"value": "14", "style": ""}
+            },
+            "dx": {
+                "entity2namecolumn": {"value": "dx", "style": "font-weight:bold;"},
+                "entity2knowledgecolumn": {"value": "50", "style": ""},
+                "entity2componentscolumn": {"value": "50", "style": ""}
+            },
+            "depinder": {
+                "entity2namecolumn": {"value": "depinder", "style": "font-weight:bold;"},
+                "entity2knowledgecolumn": {"value": "11", "style": ""},
+                "entity2componentscolumn": {"value": "11", "style": ""}
+            },
+            "depminer": {
+                "entity2namecolumn": {"value": "depminer", "style": "font-weight:bold;"},
+                "entity2knowledgecolumn": {"value": "3", "style": ""},
+                "entity2componentscolumn": {"value": "3", "style": ""}
+            },
+            "insider": {
+                "entity2namecolumn": {"value": "insider", "style": "font-weight:bold;"},
+                "entity2knowledgecolumn": {"value": "18", "style": ""},
+                "entity2componentscolumn": {"value": "18", "style": ""}
+            }
+        },
+        "data": {
+            "Sum of all commits": [{
+                "source": "scriptbee",
+                "target": "scriptbee",
+                "value": "28",
+                "style": "background-color:red;"
+            }, {
+                "source": "scriptbee",
+                "target": "dx",
+                "value": "64",
+                "style": "background-color:green;"
+            }, {
+                "source": "scriptbee",
+                "target": "depinder",
+                "value": "25",
+                "style": "background-color:red;"
+            }, {
+                "source": "scriptbee",
+                "target": "depminer",
+                "value": "17",
+                "style": "background-color:red;"
+            }, {"source": "scriptbee", "target": "insider", "value": "32", "style": "background-color:red;"}, {
+                "source": "dx",
+                "target": "scriptbee",
+                "value": "64",
+                "style": "background-color:green;"
+            }, {"source": "dx", "target": "dx", "value": "100", "style": "background-color:green;"}, {
+                "source": "dx",
+                "target": "depinder",
+                "value": "61",
+                "style": "background-color:green;"
+            }, {"source": "dx", "target": "depminer", "value": "53", "style": "background-color:green;"}, {
+                "source": "dx",
+                "target": "insider",
+                "value": "68",
+                "style": "background-color:green;"
+            }, {
+                "source": "depinder",
+                "target": "scriptbee",
+                "value": "25",
+                "style": "background-color:red;"
+            }, {
+                "source": "depinder",
+                "target": "dx",
+                "value": "61",
+                "style": "background-color:green;"
+            }, {
+                "source": "depinder",
+                "target": "depinder",
+                "value": "22",
+                "style": "background-color:red;"
+            }, {
+                "source": "depinder",
+                "target": "depminer",
+                "value": "14",
+                "style": "background-color:red;"
+            }, {
+                "source": "depinder",
+                "target": "insider",
+                "value": "29",
+                "style": "background-color:red;"
+            }, {
+                "source": "depminer",
+                "target": "scriptbee",
+                "value": "17",
+                "style": "background-color:red;"
+            }, {
+                "source": "depminer",
+                "target": "dx",
+                "value": "53",
+                "style": "background-color:green;"
+            }, {
+                "source": "depminer",
+                "target": "depinder",
+                "value": "14",
+                "style": "background-color:red;"
+            }, {
+                "source": "depminer",
+                "target": "depminer",
+                "value": "6",
+                "style": "background-color:yellow;"
+            }, {
+                "source": "depminer",
+                "target": "insider",
+                "value": "21",
+                "style": "background-color:red;"
+            }, {
+                "source": "insider",
+                "target": "scriptbee",
+                "value": "32",
+                "style": "background-color:red;"
+            }, {"source": "insider", "target": "dx", "value": "68", "style": "background-color:green;"}, {
+                "source": "insider",
+                "target": "depinder",
+                "value": "29",
+                "style": "background-color:red;"
+            }, {
+                "source": "insider",
+                "target": "depminer",
+                "value": "21",
+                "style": "background-color:red;"
+            }, {"source": "insider", "target": "insider", "value": "36", "style": "background-color:red;"}],
+            "Multiplication of all commits": [{
+                "source": "scriptbee",
+                "target": "scriptbee",
+                "value": "196",
+                "style": "background-color:green;"
+            }, {
+                "source": "scriptbee",
+                "target": "dx",
+                "value": "700",
+                "style": "background-color:green;"
+            }, {
+                "source": "scriptbee",
+                "target": "depinder",
+                "value": "154",
+                "style": "background-color:green;"
+            }, {
+                "source": "scriptbee",
+                "target": "depminer",
+                "value": "42",
+                "style": "background-color:red;"
+            }, {
+                "source": "scriptbee",
+                "target": "insider",
+                "value": "252",
+                "style": "background-color:green;"
+            }, {"source": "dx", "target": "scriptbee", "value": "700", "style": "background-color:green;"}, {
+                "source": "dx",
+                "target": "dx",
+                "value": "2500",
+                "style": "background-color:green;"
+            }, {"source": "dx", "target": "depinder", "value": "550", "style": "background-color:green;"}, {
+                "source": "dx",
+                "target": "depminer",
+                "value": "150",
+                "style": "background-color:green;"
+            }, {
+                "source": "dx",
+                "target": "insider",
+                "value": "900",
+                "style": "background-color:green;"
+            }, {
+                "source": "depinder",
+                "target": "scriptbee",
+                "value": "154",
+                "style": "background-color:green;"
+            }, {
+                "source": "depinder",
+                "target": "dx",
+                "value": "550",
+                "style": "background-color:green;"
+            }, {
+                "source": "depinder",
+                "target": "depinder",
+                "value": "121",
+                "style": "background-color:green;"
+            }, {
+                "source": "depinder",
+                "target": "depminer",
+                "value": "33",
+                "style": "background-color:red;"
+            }, {
+                "source": "depinder",
+                "target": "insider",
+                "value": "198",
+                "style": "background-color:green;"
+            }, {
+                "source": "depminer",
+                "target": "scriptbee",
+                "value": "42",
+                "style": "background-color:red;"
+            }, {
+                "source": "depminer",
+                "target": "dx",
+                "value": "150",
+                "style": "background-color:green;"
+            }, {
+                "source": "depminer",
+                "target": "depinder",
+                "value": "33",
+                "style": "background-color:red;"
+            }, {
+                "source": "depminer",
+                "target": "depminer",
+                "value": "9",
+                "style": "background-color:red;"
+            }, {
+                "source": "depminer",
+                "target": "insider",
+                "value": "54",
+                "style": "background-color:yellow;"
+            }, {
+                "source": "insider",
+                "target": "scriptbee",
+                "value": "252",
+                "style": "background-color:green;"
+            }, {
+                "source": "insider",
+                "target": "dx",
+                "value": "900",
+                "style": "background-color:green;"
+            }, {
+                "source": "insider",
+                "target": "depinder",
+                "value": "198",
+                "style": "background-color:green;"
+            }, {
+                "source": "insider",
+                "target": "depminer",
+                "value": "54",
+                "style": "background-color:yellow;"
+            }, {"source": "insider", "target": "insider", "value": "324", "style": "background-color:green;"}]
+        }
+    }
 
 export const tabs = [
-    JSON.stringify({name: 'tab1', data: table1}),
-    JSON.stringify({name: 'tab2', data: table2}),
+    JSON.stringify({type: 'table', data: table1.data, name: table1.name, columns: table1.columns}),
+    JSON.stringify({
+        type: 'matrix',
+        name: 'matrixmock',
+        data: mockMatrix.data,
+        entity1PaddingData: mockMatrix.entity1PaddingData,
+        entity2PaddingData: mockMatrix.entity2PaddingData,
+        entity1PaddingColumns: mockMatrix.entity1PaddingColumns,
+        entity2PaddingColumns: mockMatrix.entity2PaddingColumns
+    }),
 ];
