@@ -6,7 +6,9 @@ export class DxMatrix extends HTMLElement {
     entityGroup1: any[] = [];
     entityGroup2: any[] = [];
     entity1PaddingData: any;
+    entity1PaddingDataCopy: any;
     entity2PaddingData: any;
+    entity2PaddingDataCopy: any;
     entity2Targets: any;
     valueComputersKeys: string[];
     valueComputersFullData: any;
@@ -49,10 +51,13 @@ export class DxMatrix extends HTMLElement {
         this.matrixSourceTargetData = this.matrix.data[this.valueComputersKeys[0]];
         this.valueComputersFullData = this.matrix.data;
         this.matrixName = this.matrix.name;
-        this.entityGroup1 = this.matrix.entity1PaddingColumns;
-        this.entityGroup2 = this.matrix.entity2PaddingColumns;
+        this.entityGroup1 = this.matrix.entity1PaddingColumns.map(e => ({...e, sortState: 'none'}));
+        this.entityGroup2 = this.matrix.entity2PaddingColumns.map(e => ({...e, sortState: 'none'}));
+
         this.entity1PaddingData = this.matrix.entity1PaddingData;
+        this.entity1PaddingDataCopy = JSON.parse(JSON.stringify(this.entity1PaddingData));
         this.entity2PaddingData = Object.values(this.matrix.entity2PaddingData);
+        this.entity2PaddingDataCopy = [...this.entity2PaddingData];
         this.entity2Targets = Object.keys(this.matrix.entity2PaddingData);
     }
 
@@ -125,6 +130,7 @@ export class DxMatrix extends HTMLElement {
         this.matrixHtml += `</tbody></table>`;
         if (this.showMatrix) {
             this.showMatrix.innerHTML = this.matrixHtml;
+            this.setSortListeners();
         }
     }
 
@@ -149,20 +155,33 @@ export class DxMatrix extends HTMLElement {
                 rightHeaders = rightHeaders + `<th style="width: 10%;"> </th>`
             }
             const style = column.nameStyle ? column?.nameStyle : "";
-            rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}</th>`
+            /* rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}</th>`*/
+            if (column.name) {
+                const sortIconClass = this.getSortIconClassBasedOnColumnState(column);
+                rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}<i class="${sortIconClass}" id="sortIcon_${column.id}" style="margin-left: 1rem; cursor: pointer"></i></th>`
+            } else {
+                rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}</th>`
+            }
             // iterate through the generated data for this column and add it as <th>
+            console.log(this.entity2PaddingData)
             let v = this.extractValuesAtTheSamePropertyInJson(this.entity2PaddingData, column.id);
             v.forEach(data => {
                 const style = Object(data).style ? Object(data)?.style : "";
                 rightHeaders += `<th  style="${style}" class="td-general-styling"><span>${Object(data).value}</span></th>`
-            })
+            });
             rightHeaders += `</tr>`;
         });
         //vertical header
         leftHeaders += `<tr style="border-top: 1px solid #ddd">`
         this.entityGroup1.forEach(column => {
             const style = column.nameStyle ? column?.nameStyle : "";
-            leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}</td>`
+            // leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}</td>`
+            if (column.name) {
+                const sortIconClass = this.getSortIconClassBasedOnColumnState(column);
+                leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}<i class="${sortIconClass}" id="sortIcon_${column.id}" style="margin-left: 1rem ;cursor: pointer"></i></td>`
+            } else {
+                leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}</td>`
+            }
         });
         leftHeaders += `</tr>`
         leftHeaders += this.getEntity1PaddingData();
@@ -183,7 +202,6 @@ export class DxMatrix extends HTMLElement {
             paddingData += entityData;
         })
         return paddingData;
-
     }
 
     getLinkedData(sourceId: any): string {
@@ -223,5 +241,102 @@ export class DxMatrix extends HTMLElement {
             this.initializeData();
             this.updateMatrix();
         }
+    }
+
+    //matrix sorting
+    setSortListeners() {
+        this.entityGroup1.concat(this.entityGroup2).forEach(column => {
+            if (column.name) {
+                const sortIcon = document.getElementById(`sortIcon_${column.id}`);
+                sortIcon!.addEventListener('click', () => {
+                    this.resetAllSortStatesExceptCurrentOne(column);
+                    switch (column.sortState) {
+                        case 'none':
+                            column.sortState = 'asc';
+                            break;
+                        case 'asc':
+                            column.sortState = 'desc';
+                            break;
+                        case 'desc':
+                            column.sortState = 'none';
+                            break;
+                    }
+                    this.sortData(column);
+                    this.updateMatrix();
+                });
+            }
+        });
+    }
+
+    sortData(column: any) {
+        const order = column.sortState;
+        if (this.entityGroup1.some(col => col.id === column.id)) {
+            if (order === 'none') {
+                this.entity1PaddingData = JSON.parse(JSON.stringify(this.entity1PaddingDataCopy));
+            } else {
+                this.entity1PaddingData = this.sortEntity1PaddingData(column.id, order)
+            }
+         //   this.matrixSourceTargetData = this.matrixSourceTargetData.sort((a, b) => this.sortFunction(a.target, b.target, order));
+        } else if (this.entityGroup2.some(col => col.id === column.id)) {
+
+            if (order === 'none') {
+                this.entity2PaddingData = [...this.entity2PaddingDataCopy];
+            } else {
+                this.entity2PaddingData = this.entity2PaddingData.sort((a, b) => this.sortFunction(a[column.id], b[column.id], order));
+            }
+            console.log(this.entity2PaddingData)
+           // this.matrixSourceTargetData = this.matrixSourceTargetData.sort((a, b) => this.sortFunction(a.target, b.target, order));
+        }
+    }
+
+    sortEntity1PaddingData(property, sortState) {
+
+        const sortOrder = sortState === 'desc' ? -1 : 1;
+        const sortedData = Object.fromEntries(
+            Object.entries(this.entity1PaddingDataCopy).sort(
+                ([, a], [, b]) =>
+                    sortOrder *
+                    (parseFloat(a[property].value) - parseFloat(b[property].value))
+            )
+        );
+
+        return sortedData;
+    }
+
+    getSortIconClassBasedOnColumnState(column: any): string {
+        switch (column.sortState) {
+            case "none": {
+                return 'fa fa-sort';
+            }
+            case "asc": {
+                return 'fa fa-sort-up'
+            }
+            case "desc": {
+                return 'fa fa-sort-down'
+            }
+        }
+        return ''
+    }
+
+    resetAllSortStatesExceptCurrentOne(columnToSkip: any) {
+        /* this.entityGroup1.concat(this.entityGroup2).forEach(column => {
+             if(column.id !== columnToSkip.id) {
+                 column.sortState = 'none';
+             }
+         });*/
+    }
+
+    sortFunction(a: any, b: any, order: string): number {
+        if (order === 'asc') {
+            if (parseInt(a.value) < parseInt(b.value)) return -1;
+            if (parseInt(a.value) > parseInt(b.value)) return 1;
+            return 0;
+        } else if (order === 'desc') {
+            if (parseInt(a.value) > parseInt(b.value)) return -1;
+            if (parseInt(a.value) < parseInt(b.value)) return 1;
+            return 0;
+        } /*else {
+            return 0;
+        }*/
     }
 }

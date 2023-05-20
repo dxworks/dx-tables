@@ -109,7 +109,7 @@ export class DxTable extends HTMLElement {
                         ${h.column.description}</p>`
                 if (this.isColumnSortable(h.column) && !h.column.childrenColumns.length) {
                     const iconClass = this.getSortIconClassBasedOnColumnState(h);
-                    headers += `<i class="${iconClass}" style="margin-left: 1rem"  id="${h.column?.id}+i"></i></div>`;
+                    headers += `<i class="${iconClass}" style="margin-left: 1rem; cursor:pointer"  id="${h.column?.id}+i"></i></div>`;
                 } else {
                     headers += `</div></th>`;
                 }
@@ -122,7 +122,7 @@ export class DxTable extends HTMLElement {
                        <span style="${h.column?.nameStyle}">${nameValue}</span>`
                 if (this.isColumnSortable(h.column) && !h.column.childrenColumns.length) {
                     const iconClass = this.getSortIconClassBasedOnColumnState(h);
-                    headers += `<i class="${iconClass}" style="margin-left: 1rem" id="${h.column?.id}+i"></i></div>`;
+                    headers += `<i class="${iconClass}" style="margin-left: 1rem; cursor:pointer" id="${h.column?.id}+i"></i></div>`;
                 } else {
                     headers += `</div></th>`;
                 }

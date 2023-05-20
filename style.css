@@ -83,11 +83,15 @@ main {
 }
 .select {
     padding: 0.6rem;
-    width: fit-content;
+    width: fit-content!important;
 }
 select:focus {
     outline: none;
 }
 select#myDropdown {
     font-size:1rem!important;
+}
+i {
+    color: #6c757d;
+    cursor: pointer;
 }
