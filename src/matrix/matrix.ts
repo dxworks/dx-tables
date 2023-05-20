@@ -16,7 +16,14 @@ export class DxMatrix extends HTMLElement {
     constructor() {
         super();
         this.initializeData();
-        this.createMatrix();
+    }
+
+    connectedCallback() {
+        this.createMatrix()
+        this.setDropdownInitialValues();
+        this.setDropdownListener();
+        this.setTransposeButtonListener();
+        this.updateMatrix();
     }
 
     get matrix(): any {
@@ -27,12 +34,16 @@ export class DxMatrix extends HTMLElement {
     set matrix(value: any) {
         this.setAttribute('matrix', JSON.stringify(value));
         this.initializeData();
-        this.createMatrix();
+        this.updateMatrix();
+        this.setDropdownInitialValues();
     }
 
 
     initializeData() {
         this.transposeButtonText = 'Transpose Matrix';
+        let transposeButton = document.getElementById('transposeButton') as HTMLButtonElement;
+        if (transposeButton) transposeButton.innerText = this.transposeButtonText;
+
         this.valueComputersKeys = [];
         this.valueComputersKeys = [...Object.keys(this.matrix.data)];
         this.matrixSourceTargetData = this.matrix.data[this.valueComputersKeys[0]];
@@ -47,6 +58,9 @@ export class DxMatrix extends HTMLElement {
 
     initializeTransposeData() {
         this.transposeButtonText = 'Original Matrix';
+        let transposeButton = document.getElementById('transposeButton') as HTMLButtonElement;
+        if (transposeButton) transposeButton.innerText = this.transposeButtonText;
+
         this.valueComputersKeys = [];
         this.valueComputersKeys = [...Object.keys(this.matrix.data)];
         this.matrixSourceTargetData = this.matrix.data[this.valueComputersKeys[0]];
@@ -59,9 +73,11 @@ export class DxMatrix extends HTMLElement {
         this.entity2Targets = Object.keys(this.matrix.entity1PaddingData);
     }
 
-    setDropdownValues() {
+    setDropdownInitialValues() {
         const dropdown = document.getElementById('myDropdown') as HTMLSelectElement;
         if (dropdown) {
+            // clear existing options
+            dropdown.innerHTML = '';
             this.valueComputersKeys.forEach((key, index) => {
                 const option = document.createElement('option');
                 option.value = key;
@@ -71,11 +87,15 @@ export class DxMatrix extends HTMLElement {
                     dropdown.value = key;
                 }
             });
-            dropdown.addEventListener('change', (event) => {
-                const target = event.target as HTMLSelectElement;
-                this.setMatrixSourceTargetData(target.value);
-            });
         }
+    }
+
+    setDropdownListener() {
+        const dropdown = document.getElementById('myDropdown') as HTMLSelectElement;
+        dropdown!.addEventListener('change', (event) => {
+            const target = event.target as HTMLSelectElement;
+            this.setMatrixSourceTargetData(target.value);
+        });
     }
 
     setTransposeButtonListener() {
@@ -87,32 +107,35 @@ export class DxMatrix extends HTMLElement {
 
     setMatrixSourceTargetData(key: string) {
         this.matrixSourceTargetData = this.valueComputersFullData[key];
-        this.createMatrix();
+        this.updateMatrix()
     }
-
 
     createMatrix() {
         if (!this.matrix) return;
+        this.innerHTML = this.setMatrixButtonOptions();
+        this.showMatrix = this.ownerDocument.createElement('div');
+        this.showMatrix.id = 'showMatrix';
+        this.appendChild(this.showMatrix);
+    }
+
+    updateMatrix() {
         this.matrixHtml = `<style>@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");.flex{display: flex}</style>`;
-        this.showMatrix = document.getElementById('showMatrix');
-        this.matrixHtml += this.setMatrixButtonOptions();
-        this.setDropdownValues();
         this.matrixHtml += `<table  style= "border-spacing: 0;width: 100%;border: 1px solid #ddd;border-collapse: collapse" class="mt-2"><tbody`;
         this.matrixHtml += this.createHeadersAndPropertiesString();
-        this.matrixHtml += `</tbody></table>`
-        this.innerHTML = this.matrixHtml;
-        this.setTransposeButtonListener();
-        //this.setDropdownValues()
+        this.matrixHtml += `</tbody></table>`;
+        if (this.showMatrix) {
+            this.showMatrix.innerHTML = this.matrixHtml;
+        }
     }
 
     setMatrixButtonOptions(): string {
         let buttonOptions = ``;
         buttonOptions += `<div class="flex">
-                         <select id="myDropdown" class="generic-btn select">
-                          </select>
-                          <button id="transposeButton" class="ml-1 generic-btn">${this.transposeButtonText}</button>
-                         </div>`
-        return buttonOptions
+                     <select id="myDropdown" class="generic-btn select">
+                      </select>
+                      <button id="transposeButton" class="ml-1 generic-btn">${this.transposeButtonText}</button>
+                     </div>`;
+        return buttonOptions;
     }
 
     createHeadersAndPropertiesString(): string {
@@ -195,11 +218,10 @@ export class DxMatrix extends HTMLElement {
         dropdown.value = this.valueComputersKeys[0];
         if (this.transposeButtonText === 'Transpose Matrix') {
             this.initializeTransposeData();
-            this.createMatrix();
+            this.updateMatrix();
         } else {
             this.initializeData();
-            this.createMatrix();
+            this.updateMatrix();
         }
     }
-
 }
