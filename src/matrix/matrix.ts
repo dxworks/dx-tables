@@ -8,6 +8,7 @@ export class DxMatrix extends HTMLElement {
     entity1PaddingData: any;
     entity1PaddingDataCopy: any;
     entity2PaddingData: any;
+    entity2PaddingDataAsString: any;
     entity2PaddingDataCopy: any;
     entity2Targets: any;
     valueComputersKeys: string[];
@@ -43,8 +44,7 @@ export class DxMatrix extends HTMLElement {
 
     initializeData() {
         this.transposeButtonText = 'Transpose Matrix';
-        let transposeButton = document.getElementById('transposeButton') as HTMLButtonElement;
-        if (transposeButton) transposeButton.innerText = this.transposeButtonText;
+        this.initializeTransposeButtonText();
 
         this.valueComputersKeys = [];
         this.valueComputersKeys = [...Object.keys(this.matrix.data)];
@@ -57,25 +57,34 @@ export class DxMatrix extends HTMLElement {
         this.entity1PaddingData = this.matrix.entity1PaddingData;
         this.entity1PaddingDataCopy = JSON.parse(JSON.stringify(this.entity1PaddingData));
         this.entity2PaddingData = Object.values(this.matrix.entity2PaddingData);
+        this.entity2PaddingDataAsString = JSON.parse(JSON.stringify(this.matrix.entity2PaddingData));
         this.entity2PaddingDataCopy = [...this.entity2PaddingData];
-        this.entity2Targets = Object.keys(this.matrix.entity2PaddingData);
+        this.entity2Targets = Object.keys(this.entity2PaddingDataAsString);
     }
 
     initializeTransposeData() {
         this.transposeButtonText = 'Original Matrix';
-        let transposeButton = document.getElementById('transposeButton') as HTMLButtonElement;
-        if (transposeButton) transposeButton.innerText = this.transposeButtonText;
+        this.initializeTransposeButtonText();
 
         this.valueComputersKeys = [];
         this.valueComputersKeys = [...Object.keys(this.matrix.data)];
         this.matrixSourceTargetData = this.matrix.data[this.valueComputersKeys[0]];
         this.valueComputersFullData = this.matrix.data;
         this.matrixName = this.matrix.name;
-        this.entityGroup1 = this.matrix.entity2PaddingColumns;
-        this.entityGroup2 = this.matrix.entity1PaddingColumns;
+        this.entityGroup1 = this.matrix.entity2PaddingColumns.map(e => ({...e, sortState: 'none'}));
+        this.entityGroup2 = this.matrix.entity1PaddingColumns.map(e => ({...e, sortState: 'none'}));
+
         this.entity1PaddingData = this.matrix.entity2PaddingData;
+        this.entity1PaddingDataCopy = JSON.parse(JSON.stringify(this.entity1PaddingData));
         this.entity2PaddingData = Object.values(this.matrix.entity1PaddingData);
+        this.entity2PaddingDataAsString = JSON.parse(JSON.stringify(this.matrix.entity1PaddingData));
+        this.entity2PaddingDataCopy = [...this.entity2PaddingData]
         this.entity2Targets = Object.keys(this.matrix.entity1PaddingData);
+    }
+
+    initializeTransposeButtonText() {
+        let transposeButton = document.getElementById('transposeButton') as HTMLButtonElement;
+        if (transposeButton) transposeButton.innerText = this.transposeButtonText;
     }
 
     setDropdownInitialValues() {
@@ -155,7 +164,6 @@ export class DxMatrix extends HTMLElement {
                 rightHeaders = rightHeaders + `<th style="width: 10%;"> </th>`
             }
             const style = column.nameStyle ? column?.nameStyle : "";
-            /* rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}</th>`*/
             if (column.name) {
                 const sortIconClass = this.getSortIconClassBasedOnColumnState(column);
                 rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}<i class="${sortIconClass}" id="sortIcon_${column.id}" style="margin-left: 1rem; cursor: pointer"></i></th>`
@@ -163,7 +171,6 @@ export class DxMatrix extends HTMLElement {
                 rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}</th>`
             }
             // iterate through the generated data for this column and add it as <th>
-            console.log(this.entity2PaddingData)
             let v = this.extractValuesAtTheSamePropertyInJson(this.entity2PaddingData, column.id);
             v.forEach(data => {
                 const style = Object(data).style ? Object(data)?.style : "";
@@ -175,7 +182,6 @@ export class DxMatrix extends HTMLElement {
         leftHeaders += `<tr style="border-top: 1px solid #ddd">`
         this.entityGroup1.forEach(column => {
             const style = column.nameStyle ? column?.nameStyle : "";
-            // leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}</td>`
             if (column.name) {
                 const sortIconClass = this.getSortIconClassBasedOnColumnState(column);
                 leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}<i class="${sortIconClass}" id="sortIcon_${column.id}" style="margin-left: 1rem ;cursor: pointer"></i></td>`
@@ -249,7 +255,6 @@ export class DxMatrix extends HTMLElement {
             if (column.name) {
                 const sortIcon = document.getElementById(`sortIcon_${column.id}`);
                 sortIcon!.addEventListener('click', () => {
-                    this.resetAllSortStatesExceptCurrentOne(column);
                     switch (column.sortState) {
                         case 'none':
                             column.sortState = 'asc';
@@ -271,36 +276,55 @@ export class DxMatrix extends HTMLElement {
     sortData(column: any) {
         const order = column.sortState;
         if (this.entityGroup1.some(col => col.id === column.id)) {
-            if (order === 'none') {
-                this.entity1PaddingData = JSON.parse(JSON.stringify(this.entity1PaddingDataCopy));
+            if (this.transposeButtonText === 'Original Matrix') {
+                if (order === 'none') {
+                    this.entity1PaddingData = JSON.parse(JSON.stringify(this.entity1PaddingDataCopy));
+                } else {
+                    this.entity1PaddingData = this.sortJSONObjectData(this.entity1PaddingData, column.id, order);
+                }
             } else {
-                this.entity1PaddingData = this.sortEntity1PaddingData(column.id, order)
+                if (order === 'none') {
+                    this.entity1PaddingData = JSON.parse(JSON.stringify(this.entity1PaddingDataCopy));
+                } else {
+                    this.entity1PaddingData = this.sortJSONObjectData(this.entity1PaddingData, column.id, order);
+                }
             }
-         //   this.matrixSourceTargetData = this.matrixSourceTargetData.sort((a, b) => this.sortFunction(a.target, b.target, order));
         } else if (this.entityGroup2.some(col => col.id === column.id)) {
+            if (this.transposeButtonText === 'Original Matrix') {
+                if (order === 'none') {
+                    this.entity2PaddingData = [...this.entity2PaddingDataCopy];
+                    this.entity2PaddingDataAsString = JSON.parse(JSON.stringify(this.matrix.entity1PaddingData));
+                    this.entity2Targets = Object.keys(this.entity2PaddingDataAsString);
 
-            if (order === 'none') {
-                this.entity2PaddingData = [...this.entity2PaddingDataCopy];
+                } else {
+                    this.entity2PaddingDataAsString = this.sortJSONObjectData(this.entity2PaddingDataAsString, column.id, order);
+                    this.entity2PaddingData = this.entity2PaddingData.sort((a, b) => this.sortFunction(a[column.id], b[column.id], order));
+                    this.entity2Targets = Object.keys(this.entity2PaddingDataAsString);
+                }
             } else {
-                this.entity2PaddingData = this.entity2PaddingData.sort((a, b) => this.sortFunction(a[column.id], b[column.id], order));
+                if (order === 'none') {
+                    this.entity2PaddingData = [...this.entity2PaddingDataCopy];
+                    this.entity2PaddingDataAsString = JSON.parse(JSON.stringify(this.matrix.entity2PaddingData));
+                    this.entity2Targets = Object.keys(this.matrix.entity2PaddingData);
+                } else {
+                    this.entity2PaddingDataAsString = this.sortJSONObjectData(this.entity2PaddingDataAsString, column.id, order);
+                    this.entity2PaddingData = this.entity2PaddingData.sort((a, b) => this.sortFunction(a[column.id], b[column.id], order));
+                    this.entity2Targets = Object.keys(this.entity2PaddingDataAsString);
+                }
             }
-            console.log(this.entity2PaddingData)
-           // this.matrixSourceTargetData = this.matrixSourceTargetData.sort((a, b) => this.sortFunction(a.target, b.target, order));
         }
     }
 
-    sortEntity1PaddingData(property, sortState) {
 
+    sortJSONObjectData(data, property, sortState) {
         const sortOrder = sortState === 'desc' ? -1 : 1;
-        const sortedData = Object.fromEntries(
-            Object.entries(this.entity1PaddingDataCopy).sort(
+        return Object.fromEntries(
+            Object.entries(data).sort(
                 ([, a], [, b]) =>
                     sortOrder *
                     (parseFloat(a[property].value) - parseFloat(b[property].value))
             )
         );
-
-        return sortedData;
     }
 
     getSortIconClassBasedOnColumnState(column: any): string {
@@ -318,14 +342,6 @@ export class DxMatrix extends HTMLElement {
         return ''
     }
 
-    resetAllSortStatesExceptCurrentOne(columnToSkip: any) {
-        /* this.entityGroup1.concat(this.entityGroup2).forEach(column => {
-             if(column.id !== columnToSkip.id) {
-                 column.sortState = 'none';
-             }
-         });*/
-    }
-
     sortFunction(a: any, b: any, order: string): number {
         if (order === 'asc') {
             if (parseInt(a.value) < parseInt(b.value)) return -1;
@@ -335,8 +351,6 @@ export class DxMatrix extends HTMLElement {
             if (parseInt(a.value) > parseInt(b.value)) return -1;
             if (parseInt(a.value) < parseInt(b.value)) return 1;
             return 0;
-        } /*else {
-            return 0;
-        }*/
+        }
     }
 }
