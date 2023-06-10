@@ -53,7 +53,6 @@ export class DxTable extends HTMLElement {
         if (!this.table) return;
 
         this.columnCount = 0;
-        this.content = `<style>@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");</style>`
         this.content += `<table style=" border-collapse: collapse;">`;
         //create table headers
         this.content += this.createTableHeaders();

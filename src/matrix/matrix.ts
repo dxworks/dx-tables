@@ -17,6 +17,8 @@ export class DxMatrix extends HTMLElement {
         super();
         this.initializeData();
         this.createMatrix();
+        this.setDropdownInitialValues();
+        this.setDropdownListener();
     }
 
     get matrix(): any {
@@ -28,6 +30,8 @@ export class DxMatrix extends HTMLElement {
         this.setAttribute('matrix', JSON.stringify(value));
         this.initializeData();
         this.createMatrix();
+        this.setDropdownInitialValues();
+        this.setDropdownListener();
     }
 
 
@@ -59,7 +63,7 @@ export class DxMatrix extends HTMLElement {
         this.entity2Targets = Object.keys(this.matrix.entity1PaddingData);
     }
 
-    setDropdownValues() {
+    setDropdownInitialValues() {
         const dropdown = document.getElementById('myDropdown') as HTMLSelectElement;
         if (dropdown) {
             this.valueComputersKeys.forEach((key, index) => {
@@ -67,15 +71,20 @@ export class DxMatrix extends HTMLElement {
                 option.value = key;
                 option.textContent = key;
                 dropdown.appendChild(option);
+                if(!dropdown.value)
                 if (index === 0) {
                     dropdown.value = key;
                 }
             });
-            dropdown.addEventListener('change', (event) => {
-                const target = event.target as HTMLSelectElement;
-                this.setMatrixSourceTargetData(target.value);
-            });
         }
+    }
+
+    setDropdownListener() {
+        const dropdown = document.getElementById('myDropdown') as HTMLSelectElement;
+        dropdown!.addEventListener('change', (event) => {
+            const target = event.target as HTMLSelectElement;
+            this.setMatrixSourceTargetData(target.value);
+        });
     }
 
     setTransposeButtonListener() {
@@ -96,13 +105,11 @@ export class DxMatrix extends HTMLElement {
         this.matrixHtml = `<style>@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");.flex{display: flex}</style>`;
         this.showMatrix = document.getElementById('showMatrix');
         this.matrixHtml += this.setMatrixButtonOptions();
-        this.setDropdownValues();
         this.matrixHtml += `<table  style= "border-spacing: 0;width: 100%;border: 1px solid #ddd;border-collapse: collapse" class="mt-2"><tbody`;
         this.matrixHtml += this.createHeadersAndPropertiesString();
         this.matrixHtml += `</tbody></table>`
         this.innerHTML = this.matrixHtml;
         this.setTransposeButtonListener();
-        //this.setDropdownValues()
     }
 
     setMatrixButtonOptions(): string {
@@ -127,7 +134,7 @@ export class DxMatrix extends HTMLElement {
             }
             const style = column.nameStyle ? column?.nameStyle : "";
             rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}</th>`
-            // iterate through the generated data for this column and add it as <th>
+            // iterate through the generated data for this column and add it as <th> before skipping to the next row
             let v = this.extractValuesAtTheSamePropertyInJson(this.entity2PaddingData, column.id);
             v.forEach(data => {
                 const style = Object(data).style ? Object(data)?.style : "";
@@ -142,6 +149,7 @@ export class DxMatrix extends HTMLElement {
             leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}</td>`
         });
         leftHeaders += `</tr>`
+        //add the padding data and the matrix source-target linked data on each row
         leftHeaders += this.getEntity1PaddingData();
         html += rightHeaders + leftHeaders;
         return html;
