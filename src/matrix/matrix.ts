@@ -1,4 +1,4 @@
-export class DxMatrix extends HTMLElement {
+export class DxMatrix extends HTMLElement{
 
     matrixHtml: string = '';
     matrixName: string = '';
@@ -26,7 +26,7 @@ export class DxMatrix extends HTMLElement {
         this.setDropdownInitialValues();
         this.setDropdownListener();
         this.setTransposeButtonListener();
-        this.updateMatrix();
+        this.updateMatrix(false);
     }
 
     get matrix(): any {
@@ -37,7 +37,7 @@ export class DxMatrix extends HTMLElement {
     set matrix(value: any) {
         this.setAttribute('matrix', JSON.stringify(value));
         this.initializeData();
-        this.updateMatrix();
+        this.updateMatrix(false);
         this.setDropdownInitialValues();
     }
 
@@ -80,6 +80,7 @@ export class DxMatrix extends HTMLElement {
         this.entity2PaddingDataAsString = JSON.parse(JSON.stringify(this.matrix.entity1PaddingData));
         this.entity2PaddingDataCopy = [...this.entity2PaddingData]
         this.entity2Targets = Object.keys(this.matrix.entity1PaddingData);
+
     }
 
     initializeTransposeButtonText() {
@@ -121,7 +122,7 @@ export class DxMatrix extends HTMLElement {
 
     setMatrixSourceTargetData(key: string) {
         this.matrixSourceTargetData = this.valueComputersFullData[key];
-        this.updateMatrix()
+        this.updateMatrix(false)
     }
 
     createMatrix() {
@@ -132,14 +133,14 @@ export class DxMatrix extends HTMLElement {
         this.appendChild(this.showMatrix);
     }
 
-    updateMatrix() {
+    updateMatrix(isTransposed: boolean) {
         this.matrixHtml = `<style>@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");.flex{display: flex}</style>`;
         this.matrixHtml += `<table  style= "border-spacing: 0;width: 100%;border: 1px solid #ddd;border-collapse: collapse" class="mt-2"><tbody`;
-        this.matrixHtml += this.createHeadersAndPropertiesString();
+        this.matrixHtml += this.createHeadersAndPropertiesString(isTransposed);
         this.matrixHtml += `</tbody></table>`;
         if (this.showMatrix) {
             this.showMatrix.innerHTML = this.matrixHtml;
-            this.setSortListeners();
+            this.setSortListeners(isTransposed);
         }
     }
 
@@ -153,7 +154,7 @@ export class DxMatrix extends HTMLElement {
         return buttonOptions;
     }
 
-    createHeadersAndPropertiesString(): string {
+    createHeadersAndPropertiesString(isTransposed: boolean): string {
         let rightHeaders: string = '';
         let leftHeaders: string = '';
         let html = '';
@@ -163,7 +164,7 @@ export class DxMatrix extends HTMLElement {
             for (let i = 0; i < this.entityGroup1.length - 1; i++) {
                 rightHeaders = rightHeaders + `<th style="width: 10%;"> </th>`
             }
-            const style = column.nameStyle ? column?.nameStyle : "";
+            const style = column.nameStyle ? column?.nameStyle : '';
             if (column.name) {
                 const sortIconClass = this.getSortIconClassBasedOnColumnState(column);
                 rightHeaders += `<th style="${style}" id="${column.id}" class="td-general-styling">${column.name}<i class="${sortIconClass}" id="sortIcon_${column.id}" style="margin-left: 1rem; cursor: pointer"></i></th>`
@@ -173,7 +174,7 @@ export class DxMatrix extends HTMLElement {
             // iterate through the generated data for this column and add it as <th>
             let v = this.extractValuesAtTheSamePropertyInJson(this.entity2PaddingData, column.id);
             v.forEach(data => {
-                const style = Object(data).style ? Object(data)?.style : "";
+                const style = Object(data).style ? Object(data)?.style : '';
                 rightHeaders += `<th  style="${style}" class="td-general-styling"><span>${Object(data).value}</span></th>`
             });
             rightHeaders += `</tr>`;
@@ -181,7 +182,7 @@ export class DxMatrix extends HTMLElement {
         //vertical header
         leftHeaders += `<tr style="border-top: 1px solid #ddd">`
         this.entityGroup1.forEach(column => {
-            const style = column.nameStyle ? column?.nameStyle : "";
+            const style = column.nameStyle ? column?.nameStyle : '';
             if (column.name) {
                 const sortIconClass = this.getSortIconClassBasedOnColumnState(column);
                 leftHeaders += `<td style="${style}" id="${column.id}" class="td-general-styling">${column.name}<i class="${sortIconClass}" id="sortIcon_${column.id}" style="margin-left: 1rem ;cursor: pointer"></i></td>`
@@ -190,30 +191,35 @@ export class DxMatrix extends HTMLElement {
             }
         });
         leftHeaders += `</tr>`
-        leftHeaders += this.getEntity1PaddingData();
+        leftHeaders += this.getEntity1PaddingData(isTransposed);
         html += rightHeaders + leftHeaders;
         return html;
     }
 
-    getEntity1PaddingData(): string {
+    getEntity1PaddingData(isTransposed: boolean): string {
         let paddingData = '';
         Object.keys(this.entity1PaddingData).forEach(key => {
             let entityData = `<tr>`;
             let keyData = this.entity1PaddingData[key];
             Object.values(keyData).forEach(d => {
-                const style = Object(d).style ? Object(d)?.style : "";
+                const style = Object(d).style ? Object(d)?.style : '';
                 entityData += `<td  style="${style}" class="td-general-styling"><span>${Object(d).value}</span></td>`
             });
-            entityData += this.getLinkedData(key);
+            entityData += this.getLinkedData(key, isTransposed);
             paddingData += entityData;
         })
         return paddingData;
     }
 
-    getLinkedData(sourceId: any): string {
+    getLinkedData(sourceId: any, isTransposed: boolean): string {
         let linkedData = ``;
         this.entity2Targets.forEach(targetId => {
-            const data = this.matrixSourceTargetData.find(data => data.target === targetId && data.source === sourceId);
+            let data;
+            if (isTransposed) {
+               data = this.matrixSourceTargetData.find(data => data.source === targetId && data.target === sourceId);
+            } else {
+               data = this.matrixSourceTargetData.find(data => data.target === targetId && data.source === sourceId);
+            }
             if (data) {
                 linkedData += `<td style="${data?.style}" class="td-general-styling">${data.value}</td>`
             }
@@ -242,15 +248,15 @@ export class DxMatrix extends HTMLElement {
         dropdown.value = this.valueComputersKeys[0];
         if (this.transposeButtonText === 'Transpose Matrix') {
             this.initializeTransposeData();
-            this.updateMatrix();
+            this.updateMatrix(true);
         } else {
             this.initializeData();
-            this.updateMatrix();
+            this.updateMatrix(false);
         }
     }
 
     //matrix sorting
-    setSortListeners() {
+    setSortListeners(isTransposed: boolean) {
         this.entityGroup1.concat(this.entityGroup2).forEach(column => {
             if (column.name) {
                 const sortIcon = document.getElementById(`sortIcon_${column.id}`);
@@ -267,7 +273,7 @@ export class DxMatrix extends HTMLElement {
                             break;
                     }
                     this.sortData(column);
-                    this.updateMatrix();
+                    this.updateMatrix(isTransposed);
                 });
             }
         });
@@ -329,13 +335,13 @@ export class DxMatrix extends HTMLElement {
 
     getSortIconClassBasedOnColumnState(column: any): string {
         switch (column.sortState) {
-            case "none": {
+            case 'none': {
                 return 'fa fa-sort';
             }
-            case "asc": {
+            case 'asc': {
                 return 'fa fa-sort-up'
             }
-            case "desc": {
+            case 'desc': {
                 return 'fa fa-sort-down'
             }
         }

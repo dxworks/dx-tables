@@ -32,7 +32,6 @@ function showTabContent(index: number) {
         tabContent!.innerHTML = `
             <style>
            .td-general-styling {
-                padding: 0.2rem 0.5rem;
                 white-space: nowrap;
                 text-align: center;
                 vertical-align: middle;
@@ -44,7 +43,6 @@ function showTabContent(index: number) {
         tabContent!.innerHTML = `
            <style>
            .td-general-styling {
-                padding: 0.2rem 0.5rem;
                 white-space: nowrap;
                 text-align: center;
                 vertical-align: middle;
